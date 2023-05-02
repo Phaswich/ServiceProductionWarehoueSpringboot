@@ -34,16 +34,78 @@ public class Controller {
     @Autowired
     private inventoryrepository Inventoryrepository;
     @PostMapping(path = "/addProductionorder")
-
-    public @ResponseBody String addnewProductionorder(@RequestParam String material_number,@RequestParam String material_description,@RequestParam int quantity,@RequestParam String com_date,@RequestParam int com_quantity_complete,@RequestParam int com_scrap_quantity
-            ,@RequestParam String com_completed_by,@RequestParam String rec_date,@RequestParam int rec_quantity,@RequestParam String rec_completed_by,@RequestParam String rec_received_by,@RequestParam int planned_order_number,@RequestParam String authorized_by,@RequestParam String date_authorized)
-
+    public @ResponseBody String addnewProductionorder(@RequestParam String material_number
+            ,@RequestParam String material_description
+            ,@RequestParam int quantity
+            ,@RequestParam String com_dateraw
+            ,@RequestParam int com_quantity_completeraw
+            ,@RequestParam int com_scrap_quantityraw
+            ,@RequestParam String com_completed_byraw
+            ,@RequestParam String com_dateass
+            ,@RequestParam int com_quantity_completeass
+            ,@RequestParam int com_scrap_quantityass
+            ,@RequestParam String com_completed_byass
+            ,@RequestParam String rec_date
+            ,@RequestParam int rec_quantity
+            ,@RequestParam String rec_completed_by
+            ,@RequestParam String rec_received_by
+            ,@RequestParam int planned_order_number
+            ,@RequestParam String authorized_by
+            ,@RequestParam String date_authorized)
     {
-        productionorders production_orders = new productionorders(material_number,material_description,quantity,com_date,com_quantity_complete,com_scrap_quantity,com_completed_by,rec_date,rec_quantity,rec_completed_by,
-                rec_received_by,planned_order_number,authorized_by,date_authorized);
+        productionorders production_orders = new productionorders(material_number,
+                                                                material_description,
+                quantity,
+                com_dateraw,
+                com_quantity_completeraw,
+                com_scrap_quantityraw,
+                com_completed_byraw,
+                com_dateass,
+                com_quantity_completeass,
+                com_scrap_quantityass,
+                com_completed_byass,
+                rec_date,
+                rec_quantity,
+                rec_completed_by,
+                rec_received_by,
+                planned_order_number,
+                authorized_by,
+                date_authorized);
         production_orders_repository.save(production_orders);
         return "Productionorder Saved";
     }
+
+//    @PostMapping(path = "/addProductionorder")
+//    public @ResponseBody String createPlannedOrder(@RequestBody String content) {
+//        Gson gson = new Gson();
+//        productionorders production_orderInput = gson.fromJson(content , productionorders.class);
+//        for (int i = 0; i < production_orderInput.getPlannedItemsLength() ; i++) {
+//            productionorders production_orders = new productionorders() ;
+//            productionorders plannedItem = production_orderInput.getPlannedItems(i);
+//
+//            production_orders.setPlanned_order_number(production_orderInput.getPlanned_order_number());
+//            production_orders.setMaterial_description(production_orderInput.getMaterial_description());
+//            production_orders.setQuantity(production_orderInput.getQuantity());
+//            production_orders.setCom_date(production_orderInput.getCom_date());
+//            production_orders.setCom_quantity_complete(production_orderInput.getCom_quantity_complete());
+//            production_orders.setCom_scrap_quantity(production_orderInput.getCom_scrap_quantity());
+//            production_orders.setCom_completed_by(production_orderInput.getCom_completed_by());
+//            production_orders.setRec_date(production_orderInput.getRec_date());
+//            production_orders.setRec_quantity(production_orderInput.getRec_quantity());
+//            production_orders.setRec_completed_by(production_orderInput.getRec_completed_by());
+//            production_orders.setRec_received_by(production_orderInput.getRec_received_by());
+//            production_orders.setPlanned_order_number(production_orderInput.getPlanned_order_number());
+//            production_orders.setAuthorized_by(production_orderInput.getAuthorized_by());
+//            production_orders.setDate_authorized(production_orderInput.getDate_authorized());
+//            production_orders_repository.save(production_orders);
+//        }
+//
+//
+//
+//
+//
+//        return "Productionorder Saved";
+//    }
 
     @GetMapping("/allProductionorder")
     public @ResponseBody List<productionorders> getallproductionorder(){
@@ -154,7 +216,7 @@ public class Controller {
 //        System.out.println(PO.get(0).getRec_received_by());
 
         int production_quantity = PO.get(0).getQuantity() ;
-        String date = PO.get(0).getCom_date();
+        String date = PO.get(0).getCom_dateraw();
         String issue_by = PO.get(0).getRec_completed_by();
         String received_by = PO.get(0).getRec_received_by() ;
         String location = "Warehouse" ;
